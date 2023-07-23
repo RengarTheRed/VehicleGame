@@ -3,17 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Tutorial followed https://www.youtube.com/watch?v=Z4HA8zJhGEk
 public class CarControler : MonoBehaviour
 {
     //Input Variables
     private float _horizontalInput = 0;
     private float _verticalInput = 0;
-    private bool _isBraking = false;
+    private bool _isBraking;
     
     //Car Variables
     private float _enginePower = 1000;
-    private float _breakForce = 30000;
-    private float _currentBreaking;
+    private float _brakeForce = 30000;
+    private float _currentBraking;
     private float _steeringAngle;
     private float _maxSteeringAngle = 30;
 
@@ -40,7 +41,7 @@ public class CarControler : MonoBehaviour
     {
         _horizontalInput = Input.GetAxis("Horizontal");
         _verticalInput = Input.GetAxis("Vertical");
-        _isBraking = Input.GetKeyDown(KeyCode.Space);
+        _isBraking = Input.GetKey(KeyCode.Space);
     }
 
     private void ApplyEngine()
@@ -50,20 +51,23 @@ public class CarControler : MonoBehaviour
         frontLeftCollider.motorTorque = _verticalInput * _enginePower;
         frontRightCollider.motorTorque = _verticalInput * _enginePower;
         
-        _currentBreaking = _isBraking ? _breakForce : 0f;
         if (_isBraking)
         {
-            ApplyBraking();
+            _currentBraking = _brakeForce;
         }
-
+        else
+        {
+            _currentBraking = 0;
+        }
+        ApplyBraking();
     }
 
     private void ApplyBraking()
     {
-        frontLeftCollider.brakeTorque = _currentBreaking;
-        frontRightCollider.brakeTorque = _currentBreaking;
-        backLeftCollider.brakeTorque = _currentBreaking;
-        backRightCollider.brakeTorque = _currentBreaking;
+        frontLeftCollider.brakeTorque = _currentBraking;
+        frontRightCollider.brakeTorque = _currentBraking;
+        backLeftCollider.brakeTorque = _currentBraking;
+        backRightCollider.brakeTorque = _currentBraking;
     }
 
     private void ApplySteering()

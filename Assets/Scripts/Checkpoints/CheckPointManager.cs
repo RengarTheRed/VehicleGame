@@ -33,9 +33,14 @@ public class CheckPointManager : MonoBehaviour
         _player.IncreaseTimer(30);
         int newIndex=_currentPointIndex;
 
-        newIndex = Random.Range(0, _checkpointList.Count);
-        _checkpointList[newIndex].gameObject.SetActive(true);
+        //Gets and activates new point
+        do
+        {
+            newIndex = Random.Range(0, _checkpointList.Count);
+        } while (newIndex == _currentPointIndex);
+        
         _currentPointIndex = newIndex;
+        _checkpointList[newIndex].gameObject.SetActive(true);
         _player.SetGoal(_checkpointList[_currentPointIndex].transform);
     }
 }
