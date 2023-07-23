@@ -1,18 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CheckPointManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private List<CheckPoint> _checkpointList = new List<CheckPoint>();
+    private int _currentPointIndex=0;
+    private Player _player;
+
+    private void Start()
     {
-        
+        _player = FindObjectOfType<Player>();
+        var all = FindObjectsByType<CheckPoint>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+        foreach (var point in all)
+        {
+            _checkpointList.Add(point);
+        }
+        GetNextPoint();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PointHit()
     {
-        
+        _player.IncreaseScore();
+    }
+
+    private void GetNextPoint()
+    {
+        int newIndex=_currentPointIndex;
+        //Disable last point
+        _checkpointList[_currentPointIndex].gameObject.SetActive(false);
+
+        while (newIndex == _currentPointIndex)
+        {
+            newIndex = Random.Range(0, _checkpointList.Count);
+        }
+        _checkpointList[Random.Range(0, _checkpointList.Count)].gameObject.SetActive(true);
     }
 }
