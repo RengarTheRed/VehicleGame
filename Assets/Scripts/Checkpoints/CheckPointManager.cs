@@ -25,6 +25,7 @@ public class CheckPointManager : MonoBehaviour
     public void PointHit()
     {
         _player.IncreaseScore(3);
+        GetNextPoint();
     }
 
     private void GetNextPoint()
@@ -33,7 +34,8 @@ public class CheckPointManager : MonoBehaviour
         int newIndex=_currentPointIndex;
 
         newIndex = Random.Range(0, _checkpointList.Count);
-        _checkpointList[Random.Range(0, _checkpointList.Count)].gameObject.SetActive(true);
+        _checkpointList[newIndex].gameObject.SetActive(true);
+        _currentPointIndex = newIndex;
         _player.SetGoal(_checkpointList[_currentPointIndex].transform);
     }
 }

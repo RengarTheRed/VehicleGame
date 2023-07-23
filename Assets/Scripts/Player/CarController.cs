@@ -12,7 +12,7 @@ public class CarControler : MonoBehaviour
     
     //Car Variables
     private float _enginePower = 1000;
-    private float _breakForce = 3000;
+    private float _breakForce = 30000;
     private float _currentBreaking;
     private float _steeringAngle;
     private float _maxSteeringAngle = 30;
@@ -40,13 +40,16 @@ public class CarControler : MonoBehaviour
     {
         _horizontalInput = Input.GetAxis("Horizontal");
         _verticalInput = Input.GetAxis("Vertical");
-        _isBraking = Input.GetKey(KeyCode.Space);
+        _isBraking = Input.GetKeyDown(KeyCode.Space);
     }
 
     private void ApplyEngine()
     {
         backLeftCollider.motorTorque = _verticalInput * _enginePower;
         backRightCollider.motorTorque = _verticalInput * _enginePower;
+        frontLeftCollider.motorTorque = _verticalInput * _enginePower;
+        frontRightCollider.motorTorque = _verticalInput * _enginePower;
+        
         _currentBreaking = _isBraking ? _breakForce : 0f;
         if (_isBraking)
         {

@@ -44,12 +44,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    private Vector3 origin;
+    private Vector3 dest;
+    private Vector3 relativePos;
     private void TargetArrow()
     {
-        Vector3 dest = _goal.position;
+        origin = GetComponent<CarControler>().gameObject.transform.position;
+        dest = _goal.position;
         dest.y = _arrow.position.y;
-        Debug.Log(dest);
-        _arrow.transform.LookAt(_goal.position*Time.deltaTime * .2f, Vector3.forward);
+        relativePos = origin - dest;
+        _arrow.transform.rotation = Quaternion.LookRotation(relativePos, Vector3.back);
     }
 
     private void GameOver()
