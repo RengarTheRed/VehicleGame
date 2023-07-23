@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _hud = FindFirstObjectByType<HUD>();
+        Time.timeScale = 1;
     }
 
     public void SetGoal(Transform goal)
