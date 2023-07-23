@@ -11,8 +11,8 @@ public class CarControler : MonoBehaviour
     private bool _isBraking = false;
     
     //Car Variables
-    private float _enginePower = 100000;
-    private float _breakForce = 30000;
+    private float _enginePower = 1000;
+    private float _breakForce = 3000;
     private float _currentBreaking;
     private float _steeringAngle;
     private float _maxSteeringAngle = 30;
